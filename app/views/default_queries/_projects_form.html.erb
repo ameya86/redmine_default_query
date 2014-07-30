@@ -1,0 +1,28 @@
+<%
+custom_field = ProjectCustomField.
+                 where(:id => Setting.plugin_redmine_default_query['custom_field_id']).
+                 first
+if custom_field
+%>
+<%= select_tag("project[custom_field_values][#{custom_field.id}]",
+               options_for_select([['', '']] +
+                 IssueQuery.
+                   where('project_id is null or project_id = ?', project.id).
+                   where(:visibility => IssueQuery::VISIBILITY_PUBLIC).
+                   select('id, name').
+                   all.
+                   collect{|q| [q.name, q.id.to_s]},
+                 project.custom_values.where(:custom_field_id => custom_field.id).first.to_s),
+               :id => 'default_custom_query_select') %>
+<%= javascript_tag do %>
+function set_default_custom_query_select(){
+  var custom_field = $('#project_custom_field_values_<%= custom_field.id %>');
+  var default_query = $('#default_custom_query_select');
+
+  custom_field.before(default_query);
+  custom_field.remove();
+}
+
+set_default_custom_query_select();
+<% end %><%# javascript_tag %>
+<% end %><%# if custom_field %>

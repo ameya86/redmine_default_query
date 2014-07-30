@@ -1,0 +1,11 @@
+<p>
+  <label><%= l(:field_default_query_custom_field) %></label>
+  <%= select_tag('settings[custom_field_id]',
+                 options_for_select([['', '']] +
+                   ProjectCustomField.
+                     where(:field_format => "int").
+                     select('id, name').
+                     all.
+                     collect{|c| [c.name, c.id.to_s]},
+                 Setting.plugin_redmine_default_query['custom_field_id'])) %>
+</p>

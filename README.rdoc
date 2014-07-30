@@ -1,0 +1,39 @@
+= Redmine Default Query
+
+Japanese only.
+
+プロジェクトごとにデフォルトのカスタムクエリを設定します。
+設定できるカスタムクエリは「すべてのユーザ」向けのもののみです。
+
+自己責任版です。
+テストコードもありません。
+
+== 使い方
+
+インストール後、プロジェクトの設定画面の「デフォルトクエリ」欄から
+任意のカスタムクエリを選び、保存します。
+
+== インストール
+
+1. RAILS_ROOT/pluginsに配置する。
+
+2. rake db:migrate_plugins RAILS_ENV=production を実行する。
+
+3. Redmineを再起動する。
+
+== アンインストール
+
+1. 管理=>カスタムフィールド=>プロジェクトからデフォルトクエリに使用していたカスタムフィールドを削除する。
+
+1. RAILS_ROOTで rake db:migrate:plugin RAILS_ENV=production VERSION=0 NAME=redmine_default_query を実行する。
+
+2. RAILS_ROOT/pluginsからプラグインを削除する。
+
+3. Redmineを再起動する。
+
+== 更新履歴
+
+=== v0.0.1
+
+自己責任版。
+テストコードなし。
